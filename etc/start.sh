@@ -1,5 +1,6 @@
 #!/bin/bash -e
 
+sleep 30
 cd /home/pi/garage-remote
 git pull
 source .env.prod
