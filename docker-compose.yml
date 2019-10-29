@@ -30,6 +30,8 @@ services:
     build:
       dockerfile: Dockerfile
       context: ./nginx
+      args:
+        - SERVER_NAME=${SERVER_NAME}
     environment:
       - SERVER_NAME
     ports:
