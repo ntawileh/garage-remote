@@ -1,0 +1,46 @@
+version: '3'
+services:
+  redis:
+    image: 'arm32v7/redis'
+  api:
+    build:
+      dockerfile: Dockerfile
+      context: ./api
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - GOOGLE_CLIENT_ID
+      - GOOGLE_CLIENT_SECRET
+      - JWT_SIGNING_KEY
+      - USERS
+  gpiod:
+    build:
+      dockerfile: Dockerfile
+      context: ./gpio
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    privileged: true
+  client:
+    build:
+      dockerfile: Dockerfile
+      context: ./client
+  nginx:
+    restart: always
+    build:
+      dockerfile: Dockerfile
+      context: ./nginx
+    ports:
+      - '3000:80'
+      - '80:80'
+      - '443:443'
+    volumes:
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
+  certbot:
+    build:
+      dockerfile: Dockerfile
+      context: ./certbot
+    volumes:
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot

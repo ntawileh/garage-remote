@@ -1,0 +1,26 @@
+version: '3'
+services:
+  redis:
+    image: 'redis:latest'
+  api:
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./api
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - GOOGLE_CLIENT_ID
+      - GOOGLE_CLIENT_SECRET
+      - JWT_SIGNING_KEY
+      - USERS
+  client:
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./client
+  nginx:
+    restart: always
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./nginx
+    ports:
+      - '3000:80'
