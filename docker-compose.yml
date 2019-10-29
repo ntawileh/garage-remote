@@ -30,6 +30,8 @@ services:
     build:
       dockerfile: Dockerfile
       context: ./nginx
+     environment:
+      - SERVER_NAME
     ports:
       - '3000:80'
       - '80:80'
