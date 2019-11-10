@@ -10,8 +10,6 @@ const GoogleAuth = () => {
     onAuthChanged
   } = useContext(AuthContext);
 
-  console.log('rendering googleauth', isSignedIn, user);
-
   useEffect(() => {
     window.gapi.load('client:auth2', () => {
       window.gapi.client
