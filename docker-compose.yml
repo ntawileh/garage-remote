@@ -3,6 +3,7 @@ services:
   redis:
     image: 'arm32v7/redis'
   api:
+    restart: on-failure
     build:
       dockerfile: Dockerfile
       context: ./api
@@ -14,6 +15,7 @@ services:
       - JWT_SIGNING_KEY
       - USERS
   gpiod:
+    restart: on-failure
     build:
       dockerfile: Dockerfile
       context: ./gpio
